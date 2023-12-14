@@ -8,6 +8,49 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
+
+// For QMK:
+// KC_NONUS_BSLASH (\|) is equivalent to ["é] key in Turkish keyboards.
+// KC_GRV (~ `) is equivalent to [<>|] key in Turkish keyboards.
+// KC_SCLN is Turkish s [şŞ] key
+// KC_QUOT is Turkish i [iİ] key
+// KC_COMM is Turkish o [öÖ] key
+// KC_DOT is Turkish c [çÇ] key
+
+// For ZMK:
+// NON_US_BACKSLASH (\|) is equivalent to ["é] key in Turkish keyboards.
+// GRAVE (~ `) is equivalent to [<>|] key in Turkish keyboards.
+// SEMI (;) is Turkish s [şŞ] key
+// SQT (') is Turkish i [iİ] key
+// COMMA (,) is Turkish o [öÖ] key
+// DOT (.) is Turkish c [çÇ] key
+// FSLH (/) is Turkish dot [.:] key
+// BSLH (\) is Turkish comma (,;) key
+
+// Custom shortcuts specific to Turkish layout
+#define _CURLY_OPEN RA(N7)
+#define _CURLY_CLOSE RA(N0)
+#define _AT_SIGN RA(Q)
+#define _SQUARE_OPEN RA(N8)
+#define _SQUARE_CLOSE RA(N9)
+#define _DOLLAR_SIGN RA(N4)
+#define _BACKSLASH RA(MINUS)
+#define _VERTICAL_PIPE RA(EQUAL)
+#define _BACKTICK RA(BACKSLASH)
+#define _TILDE RA(RIGHT_BRACKET)
+#define _HASHTAG RA(N3)
+#define _LOCKSCREEN LC(LS(C_PWR)) // Screen Lock shortcut for OSX
+
+
+// Layers
+#define _QWERTY 0
+#define _LOWER 1
+#define _RAISE 2
+// #define _SPACE 3
+#define _NUMPAD 4
+// #define _SODA 5
+#define _ADJUST 5
+
 #define DEFAULT  0
 #define FN 1
 #define BT_CTRL  2
@@ -18,45 +61,119 @@
 
        /* Qwerty
         * ,-----------------------------------------. ,-----------------------------------------.
-        * | Esc  |  1   |  2   |  3   |  4   |  5   | |  6   |  7   |  8   |  9   |  0   | BkSp |
+        * |  "   |  1   |  2   |  3   |  4   |  5   | |  6   |  7   |  8   |  9   |  0   | BkSp |
         * |------+------+------+------+------+------| |------+------+------+------+------+------|
         * | Tab  |  Q   |  W   |  E   |  R   |  T   | |  Y   |  U   |  I   |  O   |  P   | Del  |
         * |------+------+------+------+------+------| |------+------+------+------+------+------|
-        * | Caps |  A   |  S   |  D   |  F   |  G   | |  H   |  J   |  K   |  L   |  ;   |  '   |
+        * |NpdEsc|  A   |  S   |  D   |  F   |  G   | |  H   |  J   |  K   |  L   |  Ş   |  İ   |
         * |------+------+------+------+------+------| |------+------+------+------+------+------|
-        * | Shft |  Z   |  X   |  C   |  V   |  B   | |  N   |  M   |  ,   |  .   |  /   | Entr |
+        * | LSFT |  Z   |  X   |  C   |  V   |  B   | |  N   |  M   |  Ö   |  Ç   |  .   |SftEnt|
         * |------+------+------+------+------+------| |------+------+------+------+------+------|
-        * | Ctrl | LGUI | LAlt | BSLH | FN   | Spac | | Spac |BTctrl| Left | Rght |  Up  | Down |
+        * | Ctrl |Adj|<>| Win  | Alt  |Lowr|,|Space | |RaiSPC| AltGR| Left | Down |  Up  | Rght |
         * `-----------------------------------------' `-----------------------------------------'
         */
-
         default_layer {
             bindings = <
-            &kp ESC   &kp N1    &kp N2   &kp N3    &kp N4      &kp N5               &kp N6    &kp N7      &kp N8     &kp N9    &kp N0   &kp BSPC
-            &kp TAB   &kp Q     &kp W    &kp E     &kp R       &kp T                &kp Y     &kp U       &kp I      &kp O     &kp P    &kp DEL
-            &kp CAPS  &kp A     &kp S    &kp D     &kp F       &kp G                &kp H     &kp J       &kp K      &kp L     &kp SEMI &kp SQT
-            &kp LSHFT &kp Z     &kp X    &kp C     &kp V       &kp B                &kp N     &kp M       &kp COMMA  &kp DOT   &kp FSLH &kp ENTER
-            &kp LCTRL &kp LGUI  &kp LALT &kp FN    &mo BT_CTRL &kp SPACE            &kp SPACE &mo BT_CTRL &kp LEFT   &kp RIGHT &kp UP   &kp DOWN
+            &kp NON_US_BACKSLASH  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5        &kp N6  &kp N7  &kp N8  &kp N9  &kp N0  &kp BSPC
+            &kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T                          &kp Y  &kp U  &kp I  &kp O  &kp P  &kp DEL
+            &lt _NUMPAD ESC  &kp A  &kp S  &kp D  &kp F  &kp G                  &kp H  &kp J  &kp K  &kp L  &kp SEMI  &kp SQT
+            &kp LSHFT  &kp Z  &kp X  &kp C  &kp V  &kp B                        &kp N  &kp M  &kp COMMA  &kp DOT  &kp FSLH  &kp ENTER
+            &kp LCTRL  &lt _ADJUST GRAVE  &kp LGUI  &kp LALT  &lt _LOWER BSLH  &kp SPACE        &lt _RAISE SPACE  &kp RALT  &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT
             >;
         };
 
-        fn_layer {
+        /* Lower
+        * ,-----------------------------------------. ,-----------------------------------------.
+        * |  >   |  !   |   '  |  ^   |   +  |  %   | |  &   |   /  |  (   |   )  |   =  | BKSP |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |  F1  |  F2  |  F3  |  F4  |      |      | |      |      |      |      |      |      |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |  F5  |  F6  |  F7  |  F8  |      |      | |      |  ?   |  -   |  Ğ   |  Ü   |  -   |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |  F9  |  F10 |  F11 |  F12 |      |      | |      |  $   |  {   |   }  |  <   |  >   |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |      |      |      |[=xx=]| DEL  | | BKSP |  [   |  ]   |   '  |  "   |      |
+        * `-----------------------------------------' `-----------------------------------------'
+        */
+        lower_layer {
             bindings = <
-            &kp ESC   &kp F1    &kp F2   &kp F3       &kp F4      &kp F5           &kp F6    &kp F7      &kp F8    &kp F9    &kp F10  &kp BSLH
-            &kp TAB   &kp N1    &kp N2   &kp N3       &kp N4      &kp N5           &kp N6    &kp N7      &kp N8    &kp N9    &kp N0   &kp DEL
-            &kp CAPS  &trans    &trans   &trans       &trans      &trans           &trans    &trans      &trans    &trans    &trans   &trans
-            &kp LSHFT &trans    &trans   &trans       &trans      &trans           &trans    &trans      &trans    &trans    &trans   &trans
-            &kp LCTRL &kp LGUI  &kp LALT &sys_reset   &bootloader &kp SPACE        &kp SPACE &trans      &kp LEFT  &kp RIGHT &kp UP   &kp DOWN
+            &kp TILDE  &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT              &kp CARET  &kp AMPS  &kp ASTERISK  &kp LPAR  &kp RPAR  &kp BSPC
+            &kp F1  &kp F2  &kp F3  &kp F4  &trans   &kp LSFT(FSLH)                 &trans  &trans  &trans  &trans  &trans  &trans
+            &kp F5  &kp F6  &kp F7  &kp F8  &trans   &trans                         &trans  &kp UNDERSCORE  &kp EQUAL  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp EQUAL
+            &kp F9  &kp F10 &kp F11  &kp F12  &trans  &trans                        &trans  &kp _DOLLAR_SIGN  &kp _CURLY_OPEN  &kp _CURLY_CLOSE  &kp GRAVE  &kp LS(GRAVE)
+            &trans  &trans  &trans  &trans  &trans  &kp DEL                         &kp BKSP  &kp _SQUARE_OPEN  &kp _SQUARE_CLOSE  &kp AT  &kp NON_US_BACKSLASH  &trans
             >;
         };
 
-        bt_control {
+
+        /* Raise
+        * ,-----------------------------------------. ,-----------------------------------------.
+        * |  <>| |  1   |  2   |  3   |  4   |  5   | |  6   |  7   |  8   |  9   |  0   | BKSP |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |      |      |      |      |      | |      |      |      |      |      |      |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |      |      |      |      |      | |   _  |   *  |   -  | "\"  | "|"  |  ,   |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |      |      |      |      |      | |   #  |   #  |   "  | "~"  | "`"  |  <>| |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |      |      |      |      |      | |[=xx=]| DEL | Next | Vol- | Vol+ |PlyPse|
+        * `-----------------------------------------' `-----------------------------------------'
+        */
+        layer_raise {
             bindings = <
-            &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4       &trans    &trans    &trans     &trans     &trans   &trans
-            &trans     &trans       &trans       &trans       &trans       &trans             &trans    &trans    &trans     &trans     &trans   &trans
-            &trans     &trans       &trans       &trans       &trans       &trans             &trans    &trans    &trans     &trans     &trans   &trans
-            &trans     &trans       &trans       &trans       &trans       &trans             &trans    &trans    &trans     &trans     &trans   &trans
-            &trans     &trans       &trans       &trans       &trans       &trans             &trans    &trans    &bt BT_PRV &bt BT_NXT &trans   &trans
+            &kp GRAVE  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5          &kp N6  &kp N7  &kp N8  &kp N9  &kp N0  &kp BSPC
+            &trans  &trans  &trans  &trans  &trans  &trans             &trans  &trans  &trans  &trans  &trans  &trans
+            &trans  &trans  &trans  &trans  &trans  &trans             &trans  &trans  &trans  &trans  &trans  &trans
+            &trans  &trans  &trans  &trans  &trans  &trans             &kp PLUS    &kp MINUS  &kp EQUAL  &kp _BACKSLASH  &kp _VERTICAL_PIPE  &kp BACKSLASH
+            &trans  &trans  &trans  &trans  &trans  &trans             &kp _HASHTAG  &kp _HASHTAG  &kp NON_US_BSLH  &kp _TILDE  &kp _BACKTICK  &kp GRAVE
+            &trans  &trans  &trans  &trans  &trans  &trans             &trans  &kp DEL  &kp C_NEXT  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_PLAY_PAUSE
+            >;
+        };
+
+        /* Numpad
+        * KP_PDOT is comma on the Turkish layout ¯\_(ツ)_/¯
+        * ,-----------------------------------------. ,-----------------------------------------.
+        * |      |      |      |      |      |      | |      | NLCK |   /  |   *  |   -  | Bksp |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |      |      |      |      |      | |      |   7  |   8  |   9  |   +  |  =   |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |[=xx=]|      |      |      |      |      | |      |   4  |   5  |   6  |   +  |  ,   |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |      |      |      |      |      | |      |   1  |   2  |   3  |Enter |      |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |      |      |      |      |      | |Enter |Space |   0  |   .  |Enter |      |
+        * `-----------------------------------------' `-----------------------------------------'
+        */
+        layer_numpad {
+            bindings = <
+            &trans  &trans  &trans  &trans  &trans  &trans             &trans  &kp KP_NUMLOCK  &kp KP_SLASH  &kp KP_ASTERISK  &kp KP_MINUS  &kp BKSP
+            &trans  &trans  &trans  &trans  &trans  &trans             &trans  &kp N7  &kp N8  &kp N9  &kp KP_PLUS  &kp KP_EQUAL
+            &trans  &trans  &trans  &trans  &trans  &trans             &trans  &kp N4  &kp N5  &kp N6  &kp KP_PLUS  &kp KP_DOT
+            &trans  &trans  &trans  &trans  &trans  &trans             &trans  &kp N1  &kp N2  &kp N3  &kp KP_ENTER  &trans
+            &trans  &trans  &trans  &trans  &trans  &trans             &kp KP_ENTER  &kp SPACE  &kp N0  &kp SLASH  &kp KP_ENTER  &trans
+            >;
+        };
+
+        /* Adjust
+        * ,-----------------------------------------. ,-----------------------------------------.
+        * |  BT0 |  BT1 |  BT2 |  BT3 |  BT4 |      | | BtPrv| BtNxt|      |      |      |LckOSX|
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |      |      |      |      |      | |      |      |      |      |      |      |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |      |      |      |      |      | |      |      |      |      |      |      |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |CpsLck|      |      |      |      | BtClr| |      |      |      |      |      |      |
+        * |------+------+------+------+------+------| |------+------+------+------+------+------|
+        * |      |[=xx=]|      |      |      | Reset| |      |      |      |      |      |      |
+        * `-----------------------------------------' `-----------------------------------------'
+        */
+        layer_adjust {
+            bindings = <
+            &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4  &trans             &bt BT_PRV  &bt BT_NXT  &trans  &trans  &trans  &kp _LOCKSCREEN
+            &trans  &trans  &trans  &trans  &trans  &trans             &trans  &trans  &trans  &trans  &trans  &trans
+            &trans  &trans  &trans  &trans  &trans  &trans             &trans  &trans  &trans  &trans  &trans  &trans
+            &kp CLCK  &trans  &trans  &trans  &trans  &bt BT_CLR       &trans  &trans  &trans  &trans  &trans  &trans
+            &trans  &trans  &trans  &trans  &trans  &reset             &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
     };
