@@ -9,6 +9,26 @@
 #include <dt-bindings/zmk/bt.h>
 
 
+// For QMK:
+// KC_NONUS_BSLASH (\|) is equivalent to ["é] key in Turkish keyboards.
+// KC_GRV (~ `) is equivalent to [<>|] key in Turkish keyboards.
+// KC_SCLN is Turkish s [şŞ] key
+// KC_QUOT is Turkish i [iİ] key
+// KC_COMM is Turkish o [öÖ] key
+// KC_DOT is Turkish c [çÇ] key
+
+// For ZMK:
+// NON_US_BACKSLASH (\|) is equivalent to ["é] key in Turkish keyboards.
+// GRAVE (~ `) is equivalent to [<>|] key in Turkish keyboards.
+// SEMI (;) is Turkish s [şŞ] key
+// SQT (') is Turkish i [iİ] key
+// COMMA (,) is Turkish o [öÖ] key
+// DOT (.) is Turkish c [çÇ] key
+// FSLH (/) is Turkish dot [.:] key
+// BSLH (\) is Turkish comma (,;) key
+
+
+
 // Custom shortcuts specific to Turkish layout
 #define _CURLY_OPEN RA(N7)
 #define _CURLY_CLOSE RA(N0)
@@ -61,9 +81,9 @@
         * ,-----------------------------------------. ,-----------------------------------------.
         * |  >   |  !   |   '  |  ^   |   +  |  %   | |  &   |   /  |  (   |   )  |   =  | BKSP |
         * |------+------+------+------+------+------| |------+------+------+------+------+------|
-        * |  F1  |  F2  |  F3  |  F4  |      |   :  | |      |      |      |      |      |      |
+        * |  F1  |  F2  |  F3  |  F4  |      |   :  | |      |      |      |      |      |  -   |
         * |------+------+------+------+------+------| |------+------+------+------+------+------|
-        * |  F5  |  F6  |  F7  |  F8  |      |      | |      |  ?   |  -   |  Ğ   |  Ü   |  -   |
+        * |  F5  |  F6  |  F7  |  F8  |      |      | |      |  ?   |  -   |  Ğ   |  Ü   |  _   |
         * |------+------+------+------+------+------| |------+------+------+------+------+------|
         * |  F9  |  F10 |  F11 |  F12 |      |      | |      |  $   |  {   |   }  |  <   |  >   |
         * |------+------+------+------+------+------| |------+------+------+------+------+------|
@@ -73,8 +93,8 @@
         lower_layer {
             bindings = <
             &kp TILDE  &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT              &kp CARET  &kp AMPS  &kp ASTERISK  &kp LPAR  &kp RPAR  &kp BSPC
-            &kp F1  &kp F2  &kp F3  &kp F4  &none   &kp LS(FSLH)                    &none  &none  &none  &none  &none  &none
-            &kp F5  &kp F6  &kp F7  &kp F8  &none   &none                           &none  &kp UNDERSCORE  &kp EQUAL  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp EQUAL
+            &kp F1  &kp F2  &kp F3  &kp F4  &none   &kp LS(FSLH)                    &none  &none  &none  &none  &none  &kp EQUAL
+            &kp F5  &kp F6  &kp F7  &kp F8  &none   &none                           &none  &kp UNDERSCORE  &kp EQUAL  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp PLUS
             &kp F9  &kp F10 &kp F11  &kp F12  &none  &none                          &none  &kp _DOLLAR_SIGN  &kp _CURLY_OPEN  &kp _CURLY_CLOSE  &kp GRAVE  &kp LS(GRAVE)
             &none  &none  &none  &none  &none  &kp DEL                              &kp BSPC  &kp _SQUARE_OPEN  &kp _SQUARE_CLOSE  &kp AT  &kp NON_US_BACKSLASH  &none
             >;
